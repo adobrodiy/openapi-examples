@@ -1,0 +1,31 @@
+summary: Hello World
+description: Hello World
+operationId: helloWorld
+tags: ['helloworld']
+security:
+  - bearerAuth: []
+parameters:
+  - name: queryparam
+    in: query
+    required: true
+    schema:
+      type: string
+      minLength: 2
+responses:
+  "200":
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              enum: ["Hello World!"]
+              description: Message
+  "500":
+    $ref: ../../services/build-api/components.yml#/responses/UnexpectedErrorResponse
+  "401":
+    $ref: ../../services/build-api/components.yml#/responses/UnauthorizedResponse
+  "400":
+    $ref: ../../services/build-api/components.yml#/responses/BadRequestResponse

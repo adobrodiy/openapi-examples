@@ -1,0 +1,54 @@
+securitySchemes:
+  bearerAuth:
+    type: http
+    scheme: bearer
+responses:
+  UnexpectedErrorResponse:
+    description: Unexpected error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              enum: [500]
+            message:
+              type: string
+              enum: ['Unexpected error']
+          required: ['status', 'message']
+          additionalProperties: true
+  UnauthorizedResponse:
+    description: Unauthorized error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              enum: [401]
+            message:
+              type: string
+              enum: ['Unauthorized']
+          required: ['status', 'message']
+          additionalProperties: true
+  BadRequestResponse:
+    description: Bad request error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              enum: [400]
+            message:
+              type: string
+              enum: ['Bad request']
+            errors:
+              type: array
+              items:
+                type: object
+          required: ['status', 'message', 'errors']
+          additionalProperties: true
