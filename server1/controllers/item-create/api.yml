@@ -1,0 +1,35 @@
+summary: Create item
+description: Create item
+tags: ['item']
+security:
+  - bearerAuth: []
+requestBody:
+  description: data
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          property1:
+            type: string
+        required:
+          - property1
+        additionalProperties: false
+responses:
+  "200":
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Message
+  "500":
+    $ref: ../../services/build-api/components.yml#/responses/UnexpectedErrorResponse
+  "401":
+    $ref: ../../services/build-api/components.yml#/responses/UnauthorizedResponse
+  "400":
+    $ref: ../../services/build-api/components.yml#/responses/BadRequestResponse
