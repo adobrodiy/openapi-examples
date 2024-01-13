@@ -1,1 +1,1 @@
-openapi-examples
+- server1 - local router builder + openapi-security-handler + openapi-request-validator (express-openapi libraries)
