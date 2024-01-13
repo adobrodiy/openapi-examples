@@ -15,7 +15,7 @@
     "express": "^4.18.2",
     "express-openapi-validator": "^5.1.2",
     "swagger-routes-express": "^3.3.2",
-    "swagger-ui-dist": "^5.11.0",
+    "swagger-ui-express": "^5.0.0",
     "winston": "^3.11.0"
   }
 }
