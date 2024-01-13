@@ -1,3 +1,3 @@
-- server1 - local router builder + openapi-security-handler + openapi-request-validator (express-openapi libraries)
-- server2 - express-openapi-validator + local route builder
+- server1 - custom routes builder + openapi-security-handler + openapi-request-validator (express-openapi libraries)
+- server2 - express-openapi-validator + custom routes builder
 - server3 - express-openapi-validator + swagger-routes-express
