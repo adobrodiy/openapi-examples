@@ -24,8 +24,8 @@ responses:
               enum: ["Hello World!"]
               description: Message
   "500":
-    $ref: ../../services/build-api/components.yml#/responses/UnexpectedErrorResponse
+    $ref: ../components.yml#/responses/UnexpectedErrorResponse
   "401":
-    $ref: ../../services/build-api/components.yml#/responses/UnauthorizedResponse
+    $ref: ../components.yml#/responses/UnauthorizedResponse
   "400":
-    $ref: ../../services/build-api/components.yml#/responses/BadRequestResponse
+    $ref: ../components.yml#/responses/BadRequestResponse

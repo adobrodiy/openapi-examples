@@ -1,7 +1,3 @@
-securitySchemes:
-  bearerAuth:
-    type: http
-    scheme: bearer
 responses:
   UnexpectedErrorResponse:
     description: Unexpected error
