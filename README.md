@@ -26,3 +26,6 @@ There are 3 examples
 
 Seems I need to give a chance for server3 first, but if swagger-routes-express is not very good, then I can give a chance for server2. Server1's express-openapi middlewares has not very stable apis, they are documented not so well (but there are quite a lot of docs for main framework express-openapi, but I do not really like its approach).
 So the server1 is the 3rd option then. Let's also save server1 as containing examples of custom implementations for router builder and api builder.
+
+UPDATE: for server3 I found that neither express-openapi-validator nor swagger-routes-express support multiple security strategies to apply for a single operation. I prepared custom security strategies applier and attached it the same way as controller routes are attached with swagger-routes-express. Using openapi-security-handler could be an option
+but it makes us to use custom routes builder instead of swagger-routes-express.
