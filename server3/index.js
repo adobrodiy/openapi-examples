@@ -8,10 +8,10 @@ import controllers from './controllers/index.js';
 import express from 'express';
 import errorMiddleware from './services/error-middleware/index.js';
 import * as OpenApiValidator from 'express-openapi-validator';
-import bearerAuth from './services/bearer-auth-security-handler/index.js';
 import buildApi from './services/build-api/index.js';
 import { connector as routesConnector } from 'swagger-routes-express';
 import swaggerUi from 'swagger-ui-express';
+import securityHandlers from './services/security-handlers/index.js';
 
 const main = async (
   express,
@@ -21,22 +21,24 @@ const main = async (
   swaggerUi,
   errorMiddleware,
   OpenApiValidator,
-  bearerAuth,
+  securityHandlers,
   buildApi,
   routesConnector
 ) => {
   logger.info('Starting the server...');
 
-  const { api, handlerMap } = await buildApi({ controllers });
-  const connectRoutes = routesConnector(handlerMap, api, {
-    // security: {} // it is possible to handle security there also
+  const { api, handlerMap, securityMap } = await buildApi({
+    controllers, securityHandlers
   });
+  const connectSecurity = routesConnector(securityMap, api);
+  const connectRoutes = routesConnector(handlerMap, api);
 
   const app = express();
   app.use(express.json()); //for parsing application/json requestBody
 
   app.get(`${config.apiBasePath}/openapi.json`, (req, res) => res.json(api));
   app.use('/openapi-ui', swaggerUi.serve, swaggerUi.setup(api));
+  connectSecurity(app);
   app.use(
     OpenApiValidator.middleware({
       apiSpec: api,
@@ -45,12 +47,12 @@ const main = async (
         // coerceTypes: true
       },
       validateApiSpec: false,
-      // need to check how it works with multiple security definitions
-      validateSecurity: {
-        handlers: { bearerAuth }
-      },
+      // it does not work correctly with multiple sec definitions
+      // so we use custom stuff
+      validateSecurity: false,
       // operationHandlers.resolver could be used to config routing
-      operationHandlers: false
+      operationHandlers: false,
+      validateResponses: true
     }),
   );
   connectRoutes(app);
@@ -70,7 +72,7 @@ main[dependencies] = [
   swaggerUi,
   errorMiddleware,
   OpenApiValidator,
-  bearerAuth,
+  securityHandlers,
   buildApi,
   routesConnector
 ];

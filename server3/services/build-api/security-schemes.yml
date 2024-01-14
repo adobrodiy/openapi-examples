@@ -1,0 +1,7 @@
+bearerAuth:
+  type: http
+  scheme: bearer
+serviceAuth:
+  type: apiKey
+  in: header
+  name: Authorization

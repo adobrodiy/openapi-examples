@@ -4,10 +4,12 @@ import {
 } from '../../services/di/index.js';
 import config from '../../services/config/index.js';
 import logger from '../../services/logger/index.js';
+import buildSecurity from '../../services/build-security/index.js';
 
 const factory = (
   config,
-  logger
+  logger,
+  buildSecurity
 ) => {
   return () => {
     return (error, req, res, next) => {
@@ -16,7 +18,8 @@ const factory = (
         status: 500,
         message: 'Unexpected error'
       };
-      if (error.status === 401) {
+      // security validation
+      if (error instanceof buildSecurity.errors.Unauthorized) {
         respData.status = 401;
         respData.message = 'Unauthorized';
         if (config.showErrorStackTrace) {
@@ -39,7 +42,8 @@ const factory = (
 };
 factory[dependencies] = [
   config,
-  logger
+  logger,
+  buildSecurity
 ];
 factory[singleton] = true;
 export default factory;
